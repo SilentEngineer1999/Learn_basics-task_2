@@ -1,5 +1,5 @@
 # ------------------------------------ My approach to this problem ------------------------------------#
-""" I created the header for the Output separately then the row values for all student details separately
+""" I created the header for the Output separately then I row values for all student details separately
 seeing as how they repeat for different tests from the same student making it easier to iterate. Then I
 wrote those values into a new Excel sheet and got the Output."""
 # ------------------------------------------------Start----------------------------------------------- #
@@ -9,7 +9,7 @@ import pandas
 file_path = input("enter file the File path for to optimize Student Test :-")
 # file_path = input_1.xlsx
 # file_path = Input_2.xlsx
-file = pandas.read_excel(file_path)
+file = pandas.read_excel("input_1.xlsx")
 # ------------------------------------------Side Note---------------------------------------------------#
 """I divided the header into student details and test parameters and made a separate list for test names"""
 # --------------------------------------- get values of head -------------------------------------------#
@@ -35,24 +35,31 @@ name = file[header_user[0]].to_list()
 username = file[header_user[1]].to_list()
 chapter_tag = file[header_user[2]].to_list()
 
-marks = []
-for i in range(0, len(header_parameters)):
-    if i > len(header_parameters) - 4:
-        marks.append(file[f"{test_names[0]}- {header_parameters[i]}"].to_list())
-    else:
-        marks.append(file[f"{test_names[0]} - {header_parameters[i]}"].to_list())
 
+per_stud_test = []
+for j in range(0, len(test_names)):
+    test_details = []
+    for i in range(0, len(header_parameters)):
+        if i > len(header_parameters) - 4:
+            test_details.append(file[f"{test_names[j]}- {header_parameters[i]}"].to_list())
+        else:
+            test_details.append(file[f"{test_names[j]} - {header_parameters[i]}"].to_list())
+
+    per_stud_test.append(test_details)
 
 # ------------------------------------- Side Note --------------------------------------------------------#
 """Using the header i created a list of column values in one row so one list within a list had student details
 test details together thus pairing it with header {row:column}"""
 # ---------------------------------- Combined list of all cell values ---------------------------------- #
+
 row = []
 for i in range(0, len(name)):
     for j in range(0, len(test_names)):
-        if marks[0][j] != "-":
-            row.append([name[i], username[i], chapter_tag[i], test_names[j], marks[2][j], marks[3][j], marks[0][j],
-                        marks[5][j], marks[1][j], marks[4][j]])
+        for k in range(0, len(test_names)):
+            if per_stud_test[j][0][k] != "-":
+                row.append([name[i], username[i], chapter_tag[i], test_names[j], per_stud_test[k][2][j],
+                            per_stud_test[k][3][j], per_stud_test[k][0][j], per_stud_test[j][5][k],
+                            per_stud_test[k][1][j], per_stud_test[k][4][j]])
 
 header = header_user + sorted(header_parameters)
 # ---------------------------------------dont edit from here ------------------------------------------- #
@@ -66,7 +73,7 @@ column_list = df.columns
 
 # --------------------- Create a Pandas Excel writer using XlsxWriter engine --------------------------- #
 output_path = input("Enter the output path ")
-writer = pandas.ExcelWriter(output_path, engine='xlsxwriter')
+writer = pandas.ExcelWriter("output.xlsx", engine='xlsxwriter')
 
 df.to_excel(writer, sheet_name='Sheet1', startrow=1, header=False, index=False)
 

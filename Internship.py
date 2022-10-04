@@ -1,5 +1,5 @@
 # ------------------------------------ My approach to this problem ------------------------------------#
-""" I created the header for the Output separately then I row values for all student details separately
+""" I created the header for the Output separately then the row values for all student details separately
 seeing as how they repeat for different tests from the same student making it easier to iterate. Then I
 wrote those values into a new Excel sheet and got the Output."""
 # ------------------------------------------------Start----------------------------------------------- #

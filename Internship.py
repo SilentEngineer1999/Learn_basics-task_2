@@ -9,7 +9,7 @@ import pandas
 file_path = input("enter file the File path for to optimize Student Test :-")
 # file_path = input_1.xlsx
 # file_path = Input_2.xlsx
-file = pandas.read_excel("input_1.xlsx")
+file = pandas.read_excel(file_path)
 # ------------------------------------------Side Note---------------------------------------------------#
 """I divided the header into student details and test parameters and made a separate list for test names"""
 # --------------------------------------- get values of head -------------------------------------------#
@@ -73,7 +73,7 @@ column_list = df.columns
 
 # --------------------- Create a Pandas Excel writer using XlsxWriter engine --------------------------- #
 output_path = input("Enter the output path ")
-writer = pandas.ExcelWriter("output.xlsx", engine='xlsxwriter')
+writer = pandas.ExcelWriter(output_path, engine='xlsxwriter')
 
 df.to_excel(writer, sheet_name='Sheet1', startrow=1, header=False, index=False)
 
